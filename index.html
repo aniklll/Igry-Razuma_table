@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Таблица с командами и баллами</title>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+</head>
+<body>
+  <h1>Ввод данных команд и баллов</h1>
+  
+  <!-- Форма для добавления данных -->
+  <form id="teamForm">
+    <label for="teamName">Название команды:</label>
+    <input type="text" id="teamName" required>
+    
+    <label for="teamPoints">Баллы:</label>
+    <input type="number" id="teamPoints" required>
+    
+    <button type="submit">Добавить команду</button>
+  </form>
+  
+  <h2>Таблица с командами и баллами</h2>
+  <table id="myTable" class="display">
+    <thead>
+      <tr>
+        <th>Команда</th>
+        <th>Баллы</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Здесь будут отображаться данные -->
+    </tbody>
+  </table>
+  
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      // Инициализация таблицы с сортировкой
+      var table = $('#myTable').DataTable({
+        "order": [[1, 'desc']] // Сортировка по баллам (второй столбец) по убыванию
+      });
+
+      // Обработка формы при добавлении данных
+      $('#teamForm').on('submit', function(event) {
+        event.preventDefault(); // Отмена стандартного поведения формы (перезагрузка страницы)
+
+        // Получаем данные из полей формы
+        var teamName = $('#teamName').val();
+        var teamPoints = $('#teamPoints').val();
+
+        // Добавляем новую строку в таблицу
+        table.row.add([teamName, teamPoints]).draw();
+
+        // Очищаем поля ввода после добавления
+        $('#teamName').val('');
+        $('#teamPoints').val('');
+      });
+    });
+  </script>
+</body>
+</html>
